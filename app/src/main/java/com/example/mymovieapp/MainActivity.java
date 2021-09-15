@@ -1,6 +1,7 @@
 package com.example.mymovieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String movies_api = "https://api.themoviedb.org/3/movie/popular?api_key=20a0f9ef8262bf9b90fcdab99be1a755";
+    private String movies_api = "https://api.themoviedb.org/3/movie/top_rated?api_key=20a0f9ef8262bf9b90fcdab99be1a755";
 
     private List<Movie> movieList;
     private RecyclerView recyclerView;
@@ -92,6 +93,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, movies);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 }
