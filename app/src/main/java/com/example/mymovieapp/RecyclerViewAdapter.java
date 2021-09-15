@@ -18,6 +18,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context mContext;
     private List<Movie> mData;
+    //private MovieListener mMovieListener; //equals to context
 
     public RecyclerViewAdapter(Context mContext, List<Movie> mData) {
         this.mContext = mContext;
@@ -28,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.movie_cell_activity, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, (MovieListener) mContext);
     }
 
     @Override
@@ -44,13 +45,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mData.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView image;
         TextView name;
-        public ViewHolder(@NonNull View itemView) {
+        MovieListener movieListener;
+
+        public ViewHolder(@NonNull View itemView, MovieListener movieListener) {
             super(itemView);
             image = itemView.findViewById(R.id.movie_image);
             name = itemView.findViewById(R.id.movie_name);
+            this.movieListener = movieListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            //check if need to change to: getAbsoluteAdapterPosition()
+            movieListener.onMovieClick(getBindingAdapterPosition());
         }
     }
 }

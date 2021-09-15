@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieListener {
 
     private String movies_api = "https://api.themoviedb.org/3/movie/top_rated?api_key=20a0f9ef8262bf9b90fcdab99be1a755";
 
@@ -79,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
                 for (int i = 0; i < jsonResults.length(); i++) {
                     JSONObject jsonObject = jsonResults.getJSONObject(i);
-                    Movie movie = new Movie(jsonObject.getString("title"), jsonObject.getString("poster_path"));
+                    Movie movie = new Movie(jsonObject.getString("title"), jsonObject.getString("poster_path"),
+                            jsonObject.getString("release_date"), jsonObject.getString("overview"),
+                            jsonObject.getString("vote_average"));
                     movieList.add(movie);
                 }
             } catch (JSONException e) {
@@ -94,5 +97,16 @@ public class MainActivity extends AppCompatActivity {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, movies);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+    }
+
+    @Override
+    public void onMovieClick(int position) {
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra("image", movieList.get(position).getImage());
+        intent.putExtra("name", movieList.get(position).getName());
+        intent.putExtra("description", movieList.get(position).getDescription());
+        intent.putExtra("releaseDate", movieList.get(position).getReleaseDate());
+        intent.putExtra("rating", movieList.get(position).getVoteRating());
+        startActivity(intent);
     }
 }
