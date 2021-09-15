@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ public class MovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        setTitle(getIntent().getStringExtra("name"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         image = findViewById(R.id.image);
         description = findViewById(R.id.description);
@@ -31,5 +34,15 @@ public class MovieActivity extends AppCompatActivity {
         String image_path = "https://image.tmdb.org/t/p/w500";
         Glide.with(this).load(image_path + getIntent().getStringExtra("image")).into(image);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
