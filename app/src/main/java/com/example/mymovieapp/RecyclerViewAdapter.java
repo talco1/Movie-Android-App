@@ -34,7 +34,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(mData.get(position).getImage());
-        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.image);
+
+        String image_path = "https://image.tmdb.org/t/p/w500";
+        Glide.with(mContext).load(image_path + mData.get(position).getImage()).into(holder.image);
     }
 
     @Override
