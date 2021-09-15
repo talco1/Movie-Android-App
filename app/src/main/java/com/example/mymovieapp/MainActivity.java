@@ -1,6 +1,7 @@
 package com.example.mymovieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
@@ -33,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         movieList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view);
+
+        new getMoviesData().execute();
+
     }
 
     private class getMoviesData extends AsyncTask<String, String, String> {
-
 
         @Override
         protected String doInBackground(String... strings) {
@@ -82,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            initRecyclerView(movieList);
         }
+    }
+
+    private void initRecyclerView(List<Movie> movies) {
+        recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, movies);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
