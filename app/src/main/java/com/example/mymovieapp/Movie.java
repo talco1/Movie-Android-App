@@ -1,9 +1,8 @@
 package com.example.mymovieapp;
 
+/* Movie class to save relevant information about a movie */
 public class Movie {
     String name, image, releaseDate, description, voteRating;
-   // String image;
-    //String releaseDate;
 
     public Movie(String name, String image, String releaseDate, String description, String voteRating) {
         this.name = name;
